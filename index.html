@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width" , initial-scale=1”>
+    <title>PTSD App</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Abel|Graduate" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <div class="navbar-brand">
+                <a href="index.html">
+                    <img src="assets/images/america-fingerprint.png">
+                    <h1>PTSD App</h1>
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="ptsd.html">What is PTSD?
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="resources.html">Get Help
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+    </header>
+    <div class="hotline">
+        <p>If you need help now, call 1-800-###-####.</p>
+    </div>
+    <div class="container">
+        <div class="row">
+        <div class = "col-sm-12" id="user-agreement">
+            <!--Put Google Authentication Start here, when authentication is finished, you just need to 
+            show "#assessment-content" and hide this div (and have the opposite configuration on start)-->
+        </div>
+        </div>
+        <div id="assessment-content">
+            <div class="row">
+                <div class="col-sm-12 mission">
+                    <h3>We're here to help.</h3>
+                    <p>Candy canes liquorice liquorice gingerbread chocolate cake lollipop ice cream. Ice cream chocolate jelly.
+                        Croissant brownie halvah chocolate bar ice cream cake cake. Jujubes jujubes soufflé. Cheesecake macaroon
+                        wafer liquorice sweet halvah toffee. Tart chocolate cake gummi bears gingerbread donut gingerbread
+                        cookie. Bonbon candy canes cookie. Lollipop fruitcake candy icing toffee sugar plum pie donut.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9 col-sm-12" id="assessment-column">
+                    <div class="accordion" id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                        <h3>Required: Assessment Questionnaire</h3>
+                                    </button>
+                                </h5>
+                            </div>
+                            <!--<button onCLick="killAria()" id ="p2" aria-expanded= "false">Kill</button>-->
+
+                            
+                            <!--use collapseOne id and change the show class to hide, plus in the button above, change aria-expanded to false, the function will
+                            need ifs or whatever you decide to do for every section of the accordion-->
+
+
+                            <!-- Change class from "collapse show step-one to collapse"     -->
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" id="assessment-div">
+                                            <p id="assessmentsq">Assessment</p>
+
+                                            <button id="assessmentstart">Start</button>
+                                            <button id="yes">Yes</button>
+                                            <button id="no">No</button>
+                                            <button id="resetbutton">Start Again</button>
+                                            
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                        aria-controls="collapseTwo">
+                                        <h3>Required: Behavior Description</h3>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse step-two" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" id="description-input-div">
+                                            <form>
+                                                <label>In your own words, describe the behaviors or situations that have been concerning
+                                                    since the traumatic event.</label>
+                                                <input type="text" id="behavior-description" required>
+                                                <input type="submit" name="submittext" id="submit-text">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        <h3>Optional: Upload Images</h3>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse step-three" aria-labelledby="headingThree" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" id="image-uploads-div">
+                                            <input id="URLInput" type="text" placeholder="copy and paste image URL here">
+                                            <input id="imgSub" type="submit" value="submit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                                        aria-controls="collapseFour">
+                                        <h3>Optional: Text</h3>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseFour" class="collapse step-four" aria-labelledby="headingFour" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" id="text-paste-div">
+                                            <label>Optional: Copy and paste content from social media messages, emails, or text
+                                                messages from the person you are concerned about, with their permission.
+                                                This content is disposed of within 2 hours of upload.
+                                            </label>
+                                            <input type="text" id="pasted-text">
+                                            <input type="submit" name="submitpastedtext" id="submit-pasted-text">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12" id="results-button-div">
+                            <a href="#">
+                                <!-- Disable -->
+                                <button id="fullresult">
+                                    View Full Results
+                                </button>
+                            </a>
+                            <p>
+                                <small>*This button will not be activated until you have completed all required steps.</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12" id="results-preview">
+                    <div id="previewcontent">
+
+                        <h3>Results Preview</h3>
+                        <p>
+                            <small>*press "View Full Results" for detailed results after completing all required assessment steps.</small>
+                        </p>
+                    </div>
+                    <div>
+                        <canvas id="assessment-result-graph" class="graph"></canvas>
+                        <canvas id="description-result-graph" class="graph"></canvas>
+                        <canvas id="image-analysis-graph" class="graph"></canvas>
+                        <canvas id="text-analysis-graph" class="graph"></canvas>
+                    </div>
+                    <div id="advise">
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+    <script src="assets/js/app.js"></script>
+
+
+</body>
+
+</html>
