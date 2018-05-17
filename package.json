@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/gracemiller23/ptsdTesting#readme",
   "dependencies": {
-    "require": "^2.4.20",
+    "requirejs": "^2.3.5",
     "watson-developer-cloud": "^3.4.1"
   }
 }
