@@ -11,7 +11,7 @@ var keyWordsinEntry = [];
 ////////////////////////////////////////////////Watson API for Text Analysis//////////////////////////////////////////
 
 
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+var ToneAnalyzerV3 = require('./watson-developer-cloud/tone-analyzer/v3');
 
 var toneAnalyzer = new ToneAnalyzerV3({
     version: '2017-09-21',
