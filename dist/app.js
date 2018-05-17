@@ -1,7 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 
-
-
 // //variables for text analysis functions
 var descriptionTextResultsArray =[];
 var textAnalysisPercentageResult = 0;
@@ -10,25 +8,28 @@ var id = "";
 var idName ="";
 var keyWordsinEntry = [];
 
-////////////////////////////////////////////////Watson API for Text Analysis//////////////////////////////////////////
+////////////////Watson API for Text Analysis//////////////////////////////////////////
 
 
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
 var toneAnalyzer = new ToneAnalyzerV3({
     version: '2017-09-21',
-    username: 'gracemiller0323@gmail.com',
-    password: 'Team5Wolves!',
+    url: "https://gateway.watsonplatform.net/tone-analyzer/api",
+    username: "2730f67c-5dd6-46fa-8616-1d256917b9f1",
+    password: "QsB2qWe1bvDH",
     sentences: false,
     headers: {
         'X-Watson-Learning-Opt-Out': 'true'
     }
   });
+  var watsonEmoTotal= 0;
+  var watsonDivider = 0;
 
-  //Watson Error Handling?
+  
   function watsonTextAnalysis(descriptionText){
 
-  var toneParams = {
+    var toneParams = {
     'tone_input': { 'text': descriptionText },
     'content_type': 'application/json'
   };
@@ -38,21 +39,64 @@ var toneAnalyzer = new ToneAnalyzerV3({
       console.log(error);
     } else { 
       console.log(JSON.stringify(analysis, null, 2));
+        //targets the correct part of the JSON object that Watson returns
+        var docObjAccessor = analysis.document_tone;
+        //accesses data returned about the entire document
+        accessWatsonObject(docObjAccessor);
+        //accesses data returned about individual sentences
+        for (var j = 0; j< analysis.sentences_tone.length; j++){
+            var sentenceAccessor = analysis.sentences_tone[j];
+            accessWatsonObject(sentenceAccessor);
+        }
+
     }
+    //averages the returned data to determine overall negative emotion
+    var finalWatsonAvg = watsonEmoTotal / watsonDivider;
+    //pushes results to text analysis results array
+    descriptionTextResultsArray.push(finalWatsonAvg);
+    console.log("working" + finalWatsonAvg);
+    console.log(watsonEmotionResults);
+    //triggers the function that synthesizes data from both Indico and Watson APIs
+    descriptionTextResultFxn();
   }); 0;
 
 }
 
-////////////////////////////////////////////////Indico API Functions//////////////////////////////////////////////////
+// to access sentence emotions: analysis.sentences_tone[i].tones[i]
+
+function accessWatsonObject(accessVariable){
+    //accesses the returned JSON object and looks for any negative emotions
+    for (var i = 0; i < accessVariable.tones.length; i++){
+        var toneResult = accessVariable.tones[i];
+        if (toneResult.score > 0.50 && toneResult.tone_id === "tentative"){
+            watsonEmoTotal += toneResult.score;
+            watsonDivider ++;
+
+        }else if (toneResult.score > 0.30 && toneResult.tone_id === "fear"){
+            watsonEmoTotal += toneResult.score;
+            watsonDivider ++;
+        }else if (toneResult.score > 0.30 && toneResult.tone_id === "anger"){
+            watsonEmoTotal += toneResult.score;
+            watsonDivider ++;
+        }else if (toneResult.score > 0.30 && toneResult.tone_id === "sadness"){
+            watsonEmoTotal += toneResult.score;
+            watsonDivider ++;
+        }else{
+            watsonEmoTotal += 0;
+        };
+        
+    };
+    return [watsonEmoTotal, watsonDivider];
+};
+
+////////////////Indico API Functions//////////////////////////////////////////////////
 
 // //note to self: replace actual function names with callback in functions, after functions are enacted with correct callback functions
 
 function analyzeDescriptionText(descriptionText) {
-//     //an array of the keywords highlighted from the description that could be displayed as part of detailed results
    
 
-//     //key words that are often present in descriptions of PTSD
-//     //add key words from articles in slack
+    //key words that are often present in descriptions of PTSD, factored into analysis to balance the quality of results from the Indico API for this subject matter
     var ptsdKeyWords = ["flashbacks", "night terrors", "nightmares", "bad dreams", "relive", "reliving", "relives", "avoid", "avoiding", "negative", "negativity", "unloving", "insomnia",
         "trouble sleeping", "difficulty sleeping", "distracted", "trouble concentrating", "trouble focusing", "startled", "nervous", "anxious",
         "numb", "numbness", "jumpy", "irritable", "angered", "angry", "panic", "fear", "horror", "guilt", "shame", "depressed", "aggressive", "tense",
@@ -80,8 +124,7 @@ function analyzeDescriptionText(descriptionText) {
             var arrayKeyWord = ptsdKeyWords[m];
             for (keyword in keyWordResults) {
                 if (keyword == arrayKeyWord) {
-
-                    textAnalysisPercentageResult = textAnalysisPercentageResult + 0.10;
+                    textAnalysisPercentageResult += 0.10;
                     keyWordsinEntry.push(keyword);
                 }
             }
@@ -106,11 +149,6 @@ function textEmotionAnalysis(descriptionText){
             'threshold': 0.25
         })
     ).then(function (res) {
-        // console.log("next api working:" + variable)
-
-        // var numTextAnalysisResult = variable * 1;
-        // console.log("numTextAnalysisResult", numTextAnalysisResult)
-
         var textEmotionsObject = JSON.parse(res);
         var textEmotionsResults = textEmotionsObject.results;
         console.log(textEmotionsResults);
@@ -118,7 +156,6 @@ function textEmotionAnalysis(descriptionText){
         var divider = 0;
         for (property in textEmotionsResults) {
             var emoNumValue = textEmotionsResults[property];
-///Do the if statements stop at just one of them???
             if (property === "sadness") {
                 emotionsInitialResult += emoNumValue;
                 divider++;
@@ -139,7 +176,8 @@ function textEmotionAnalysis(descriptionText){
         console.log(finalEmotionsAverage);
         descriptionTextResultsArray.push(finalEmotionsAverage);
         console.log(descriptionTextResultsArray);
-        descriptionTextResultFxn();
+        //steps analysis on to the Watson API before final results are calculated based on results from both APIs
+        watsonTextAnalysis(descriptionText);
 
     });
 
@@ -175,11 +213,12 @@ $("#submit-text").on("click", function (event) {
     console.log("clicked")
     var descriptionText = $("#behavior-description").val().trim();
     event.preventDefault();
-    watsonTextAnalysis(descriptionText);
-    // id = "#description-result-graph";
-    // idName= "description-result-graph";
-    // analyzeDescriptionText(descriptionText);
-    // $("#behavior-description").val("Submitted.");
+
+    id = "#description-result-graph";
+    idName = "description-result-graph";
+    analyzeDescriptionText(descriptionText);
+
+    $("#behavior-description").val("Submitted.");
 
 
 });
@@ -202,12 +241,6 @@ $("#submit-pasted-text").on("click", function (event) {
 
 
 });
-
-
-
-
-
-
 
 
 
