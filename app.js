@@ -13,11 +13,10 @@ var keyWordsinEntry = [];
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
 var toneAnalyzer = new ToneAnalyzerV3({
-    version: '2017-09-21',
-    url: "https://gateway.watsonplatform.net/tone-analyzer/api",
     username: "2730f67c-5dd6-46fa-8616-1d256917b9f1",
     password: "QsB2qWe1bvDH",
-    sentences: false,
+    version: '2017-09-21',
+    url: "https://gateway.watsonplatform.net/tone-analyzer/api",
     headers: {
         'X-Watson-Learning-Opt-Out': 'true'
     }
