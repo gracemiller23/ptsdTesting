@@ -1,0 +1,22 @@
+{
+  "name": "ptsdtesting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gracemiller23/ptsdTesting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gracemiller23/ptsdTesting/issues"
+  },
+  "homepage": "https://github.com/gracemiller23/ptsdTesting#readme",
+  "dependencies": {
+    "watson-developer-cloud": "^3.4.1"
+  }
+}
